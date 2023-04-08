@@ -17,6 +17,7 @@ var (
 
 	systrayReady  func()
 	systrayExit   func()
+	leftKeyClick  func()
 	menuItems     = make(map[uint32]*MenuItem)
 	menuItemsLock sync.RWMutex
 
