@@ -277,8 +277,10 @@ func (t *winTray) wndProc(hWnd windows.Handle, message uint32, wParam, lParam ui
 		systrayExit()
 	case t.wmSystrayMessage:
 		switch lParam {
-		case WM_RBUTTONUP, WM_LBUTTONUP:
+		case WM_RBUTTONUP:
 			t.showMenu()
+		case WM_LBUTTONUP:
+			leftKeyClick()
 		}
 	case t.wmTaskbarCreated: // on explorer.exe restarts
 		t.muNID.Lock()
@@ -845,6 +847,11 @@ func SetIcon(iconBytes []byte) {
 		log.Errorf("Unable to set icon: %v", err)
 		return
 	}
+}
+
+
+func SetLeftKeyfunc(f func()) {
+	leftKeyClick = f
 }
 
 // SetTemplateIcon sets the systray icon as a template icon (on macOS), falling back
